@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="TestNgMavenExampleSuite" parallel="false">
+	<listeners>
+		<listener
+			class-name="com.dinesh.testng.TestAnnotationTransformerListener"></listener>
+	</listeners>
+	<test name="TestNgMavenTest">
+		<classes>
+			<class name="com.dinesh.testng.TestClass1" />
+			<class name="com.dinesh.testng.TestClass2" />
+		</classes>
+	</test>
+</suite>
