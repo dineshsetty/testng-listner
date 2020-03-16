@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration
+	xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<appender name="rollingFile"
+		class="org.apache.log4j.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="ActiveFileName" value="C://Users//Dinesh//git//testng-listner//testng-project//logs//selenium.log" />
+			<param name="FileNamePattern"
+				value="C://Users//Dinesh//git//testng-listner//testng-project//logs//selenium.%d{dd-MMM}.log.gz" />
+		</rollingPolicy>
+		<triggeringPolicy
+			class="org.apache.log4j.rolling.SizeBasedTriggeringPolicy">
+			<!-- Setting the max log file size to 1MB -->
+			<param name="maxFileSize" value="1048576" />
+		</triggeringPolicy>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="INFO" />
+			<param name="levelMax" value="FATAL" />
+		</filter>
+	</appender>
+
+	<root>
+		<priority value="INFO" />
+		<appender-ref ref="rollingFile" />
+	</root>
+</log4j:configuration>
