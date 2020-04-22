@@ -4,11 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,9 +20,9 @@ public class ExtentReportsParser {
 	public static void main(String[] args) throws IOException {
 
 		String reportLocation = "C:\\\\Dinesh\\";
-		List<String> reportNameList = new ArrayList<String>();
-		reportNameList.add("ExtentReport1.html");
+		LinkedList<String> reportNameList = new LinkedList<String>();
 		reportNameList.add("ExtentReport2.html");
+		reportNameList.add("ExtentReport1.html");
 
 		StringBuilder excelOutputFileName = new StringBuilder();
 		excelOutputFileName.append("C:\\Dinesh\\ExecutionSummary_");
@@ -40,8 +41,13 @@ public class ExtentReportsParser {
 				resultsMap.put(spans.get(0).text(), spans.get(1).text());
 			}
 		}
-System.out.println("resultsMap "+resultsMap.toString());
-		ExcelUtil.writeResults(resultsMap, excelOutputFileName.toString());
+
+		// Sorting the Map
+		Map<String, String> sortedResultsMap = resultsMap.entrySet().stream().sorted(Map.Entry.comparingByKey())
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue,
+						LinkedHashMap::new));
+
+		ExcelUtil.writeResults(sortedResultsMap, excelOutputFileName.toString());
 	}
 
 	public static String getTimeStamp() {
